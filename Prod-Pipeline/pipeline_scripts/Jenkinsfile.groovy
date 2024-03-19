@@ -10,7 +10,7 @@ pipeline{
     SERVICE = 'nginx'
     CLUSTER = 'PROJECT2-Dev-ECS'
     FROM_EMAIL = 'manasa.bn@axcess.io'
-    TO_EMAIL = 'manasa.bn@axcess.io',
+    TO_EMAIL = 'manasa.bn@axcess.io'
     DESIRED_COUNT="1" 
     FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json" // Do not change this
   }
