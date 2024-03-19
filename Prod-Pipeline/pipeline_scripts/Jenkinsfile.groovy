@@ -3,15 +3,14 @@
 pipeline{
   agent any
   environment {
-    AWS_SECRET=credentials('b00b224c-2e99-42b0-ae96-63e94309818d')
-    REGION=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.REGION').trim()
-    FAMILY=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.FAMILY').trim()
-    APP_IMAGE_ECR_UAT=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.APP_IMAGE_ECR_UAT').trim()
-    APP_IMAGE_ECR_PROD=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.APP_IMAGE_ECR_PROD').trim()
-    SERVICE=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.SERVICE').trim()
-    CLUSTER=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.CLUSTER').trim()
-    FROM_EMAIL=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.FROM_EMAIL').trim()
-    TO_EMAIL=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.TO_EMAIL').trim() 
+    REGION = 'ap-south-1'
+    FAMILY = 'TEST-Prod-ECS-testappbnm'
+    APP_IMAGE_ECR_UAT = '317185619046.dkr.ecr.ap-south-1.amazonaws.com/bnmuat'
+    APP_IMAGE_ECR_PROD = '317185619046.dkr.ecr.ap-south-1.amazonaws.com/bnmprod'
+    SERVICE = 'nginx'
+    CLUSTER = 'PROJECT2-Dev-ECS'
+    FROM_EMAIL = 'manasa.bn@axcess.io'
+    TO_EMAIL = 'manasa.bn@axcess.io',
     DESIRED_COUNT="1" 
     FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json" // Do not change this
   }
