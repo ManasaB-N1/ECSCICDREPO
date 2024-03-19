@@ -3,20 +3,19 @@
 pipeline{
   agent any
   environment {
-    AWS_SECRET=credentials('b8a2dcbd-d2f3-479c-ad0b-28b34b65275a')
-    BRANCH_NAME=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.BRANCH_NAME').trim()
-    CREDENTIALS=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.GIT_TOKEN').trim()
-    GIT_REPO=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.GIT_REPO').trim()
-    APP_IMAGE_LOCAL=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.APP_IMAGE_LOCAL').trim()
-    REGION=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.REGION').trim()
-    ECR_REPO=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.ECR_REPO').trim()
-    FAMILY=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.FAMILY').trim()
-    SERVICE=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.SERVICE').trim()
-    CLUSTER=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.CLUSTER').trim()
-    FROM_EMAIL=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.FROM_EMAIL').trim()
-    TO_EMAIL=sh (returnStdout: true, script: 'aws ssm get-parameters --names \$AWS_SECRET --region ap-south-1 --with-decryption | jq -r .Parameters[0].Value | jq -r .Secrets.TO_EMAIL').trim()
+    BRANCH_NAME = 'main'
+    CREDENTIALS='8a28dca5-0aef-47a8-b62b-f40a071d2715'
+    GIT_REPO = 'github.com/ManasaB-N1/ECSAPPREPO.git' 
+    APP_IMAGE_LOCAL = 'nginx'
+    REGION = 'ap-south-1'
+    ECR_REPO = '317185619046.dkr.ecr.ap-south-1.amazonaws.com/bnmuat'
+    FAMILY = 'TEST-Prod-ECS-testappbnm'
+    SERVICE = 'nginx'
+    CLUSTER = 'PROJECT2-Dev-ECS'
+    FROM_EMAIL= 'manasa.bn@axcess.io'
+    TO_EMAIL = 'manasa.bn@axcess.io'
     DESIRED_COUNT="1"
-    FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json" // Do not change this
+    FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json"
     }
   stages {
     stage("Git Clone") {      
