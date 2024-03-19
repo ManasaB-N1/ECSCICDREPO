@@ -3,7 +3,7 @@
 pipeline{
   agent any
   environment {
-    AWS_SECRET=credentials('06a9bb8c-9875-4c75-9ce3-bf0a30ae5a94')
+    AWS_SECRET=credentials('b8a2dcbd-d2f3-479c-ad0b-28b34b65275a')
     BRANCH_NAME=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."BRANCH_NAME"').trim()
     CREDENTIALS=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."GIT_TOKEN"').trim()
     GIT_REPO=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."GIT_REPO"').trim()
