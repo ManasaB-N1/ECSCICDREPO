@@ -3,16 +3,15 @@
 pipeline{
   agent any
   environment {
-    AWS_SECRET=credentials('3f54d5cc-13eb-4bf1-b3cf-dee02a942a81')
-    REGION=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."REGION"').trim()
-    FAMILY=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."FAMILY"').trim()
-    APP_IMAGE_ECR_UAT=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."APP_IMAGE_ECR_UAT"').trim()
-    APP_IMAGE_ECR_PROD=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."APP_IMAGE_ECR_PROD"').trim()
-    SERVICE=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."SERVICE"').trim()
-    CLUSTER=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."CLUSTER"').trim()
-    FROM_EMAIL=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."FROM_EMAIL"').trim()
-    TO_EMAIL=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."TO_EMAIL"').trim()
-    DESIRED_COUNT="1"
+    REGION = 'ap-south-1'
+    FAMILY = 'TEST-Prod-ECS-testappbnm'
+    APP_IMAGE_ECR_UAT = '317185619046.dkr.ecr.ap-south-1.amazonaws.com/bnmuat'
+    APP_IMAGE_ECR_PROD = '317185619046.dkr.ecr.ap-south-1.amazonaws.com/bnmprod'
+    SERVICE = 'nginx'
+    CLUSTER = 'PROJECT2-Dev-ECS'
+    FROM_EMAIL = 'manasa.bn@axcess.io'
+    TO_EMAIL = 'manasa.bn@axcess.io' 
+    DESIRED_COUNT="1" 
     FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json" // Do not change this
   }
   stages {
