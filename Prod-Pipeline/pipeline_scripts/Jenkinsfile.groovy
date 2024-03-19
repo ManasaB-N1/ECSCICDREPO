@@ -3,7 +3,7 @@
 pipeline{
   agent any
   environment {
-    AWS_SECRET=credentials('3f54d5cc-13eb-4bf1-b3cf-dee02a942a81')
+    AWS_SECRET=credentials('b00b224c-2e99-42b0-ae96-63e94309818d')
     REGION=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."REGION"').trim()
     FAMILY=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."FAMILY"').trim()
     APP_IMAGE_ECR_UAT=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."APP_IMAGE_ECR_UAT"').trim()
