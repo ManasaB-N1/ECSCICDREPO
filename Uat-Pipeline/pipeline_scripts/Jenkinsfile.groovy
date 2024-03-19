@@ -3,20 +3,19 @@
 pipeline{
   agent any
   environment {
-    AWS_SECRET=credentials('06a9bb8c-9875-4c75-9ce3-bf0a30ae5a94')
-    BRANCH_NAME=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."BRANCH_NAME"').trim()
-    CREDENTIALS=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."GIT_TOKEN"').trim()
-    GIT_REPO=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."GIT_REPO"').trim()
-    APP_IMAGE_LOCAL=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."APP_IMAGE_LOCAL"').trim()
-    REGION=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."REGION"').trim()
-    ECR_REPO=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."ECR_REPO"').trim()
-    FAMILY=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."FAMILY"').trim()
-    SERVICE=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."SERVICE"').trim()
-    CLUSTER=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."CLUSTER"').trim()
-    FROM_EMAIL=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."FROM_EMAIL"').trim()
-    TO_EMAIL=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."TO_EMAIL"').trim()
+    BRANCH_NAME = 'main'
+    CREDENTIALS='8a28dca5-0aef-47a8-b62b-f40a071d2715'
+    GIT_REPO = 'github.com/ManasaB-N1/ECSAPPREPO.git' 
+    APP_IMAGE_LOCAL = 'nginx'
+    REGION = 'ap-south-1'
+    ECR_REPO = '317185619046.dkr.ecr.ap-south-1.amazonaws.com/bnmuat'
+    FAMILY = 'TEST-Prod-ECS-testappbnm'
+    SERVICE = 'nginx'
+    CLUSTER = 'PROJECT2-Dev-ECS'
+    FROM_EMAIL= 'manasa.bn@axcess.io'
+    TO_EMAIL = 'manasa.bn@axcess.io'
     DESIRED_COUNT="1"
-    FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json" // Do not change this
+    FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json"
     }
   stages {
     stage("Git Clone") {      
