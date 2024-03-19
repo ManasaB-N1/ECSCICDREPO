@@ -17,6 +17,7 @@ pipeline{
     TO_EMAIL=sh (returnStdout: true, script: 'aws secretsmanager get-secret-value --secret-id \$AWS_SECRET | jq --raw-output .SecretString | jq -r ."TO_EMAIL"').trim()
     DESIRED_COUNT="1"
     FILENAME = "${env.FAMILY}-${env.BUILD_NUMBER}.json" // Do not change this
+    }
   stages {
     stage("Git Clone") {      
       steps {
